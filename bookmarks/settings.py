@@ -27,7 +27,7 @@ SECRET_KEY = 'wmm&fp62d*etb-0imi$2+154j&t#kws*6z!@lrgg$db^mkj@yg'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['alijkee.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['alijkee.com', 'localhost', '127.0.0.1',  '9ebfacfd.ngrok.io']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'images.apps.ImagesConfig',
 ]
 
 MIDDLEWARE = [
