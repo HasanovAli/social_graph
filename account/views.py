@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
@@ -66,3 +68,29 @@ def edit(request):
         user_form = UserEditForm(instance=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+@login_required
+def user_list(request):
+    users = User.objects.filter(is_active=True)
+    # paginator = Paginator(users, 8)
+    # page = request.GET.get('page')
+    # try:
+    #     users = paginator.page(page)
+    # except PageNotAnInteger:
+    #     users = paginator.page(1)
+    # except EmptyPage:
+    #     if request.is_ajax():
+    #         return HttpResponse('')
+    #     users = paginator.page(paginator.num_pages)
+    #
+    # if request.is_ajax():
+    #     return render(request, 'account/user/list_ajax.html', {'section': 'people', 'users': users})
+
+    return render(request, 'account/user/list.html', {'section': 'people', 'users': users})
+
+
+@login_required
+def user_detail(request, username):
+    user = get_object_or_404(User, username=username, is_active=True)
+    return render(request, 'account/user/detail.html', {'section': 'people', 'user': user})
